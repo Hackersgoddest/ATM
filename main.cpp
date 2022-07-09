@@ -47,9 +47,41 @@ public:
   void transfer();
   // Function that checks the validity of the amount entered by the user.
   void isValidAmount(string &);
+  // Function to display error message if the length of the card number is less than or greater than the expected length
+  void isInvalidCardLength(const string);
+  // Function to display error message if the length of the pin is less than or greater than the expected length
+  void isInvalidPinLength(const string);
   // Declaring classs destructor
   ~ATM();
 };
+
+void ATM::isInvalidCardLength(const string number)
+{
+  if (number.length() < 10)
+      {
+        system("cls");
+        cout << "ERROR: Card number length cannot be less than 10\n";
+      }
+      if (number.length() > 10)
+      {
+        system("cls");
+        cout << "ERROR: Card number length cannot be greater than 10\n";
+      }
+}
+
+void ATM::isInvalidPinLength(string pin)
+{
+  if (pin.length() < 4)
+      {
+        system("cls");
+        cout << "ERROR: Pin length cannot be less than 4\n";
+      }
+      if (pin.length() > 4)
+      {
+        system("cls");
+        cout << "ERROR: Pin length cannot be greater than 4\n";
+      }
+}
 
 void ATM::accountMenu()
 {
@@ -109,16 +141,7 @@ void ATM::addCardDetails()
       cout << "Enter card number(must contain 10 digits)... ";
       getline(cin >> ws, number);
       isDigit(number);
-      if (number.length() < 10)
-      {
-        system("cls");
-        cout << "ERROR: Card number length cannot be less than 10\n";
-      }
-      if (number.length() > 10)
-      {
-        system("cls");
-        cout << "ERROR: Card number length cannot be greater than 10\n";
-      }
+      isInvalidCardLength(number);
     } while (number.length() < 10 || number.length() > 10); // Ensures that the user enter exactly 10 digits
     card_num = stoull(number); // Convert number of string type to unsigned long long using stoull and stores it in card_num of unsigned long long type
     if (cardIndex == 0) // This condition ensures that there is no check for existing card number at first registration of card number
@@ -147,16 +170,7 @@ void ATM::addCardDetails()
       cout << "Enter your four digit pin... ";
       getline(cin >> ws, pin);
       isDigit(pin);
-      if (pin.length() < 4)
-      {
-        system("cls");
-        cout << "ERROR: Card number length cannot be less than 4\n";
-      }
-      if (pin.length() > 4)
-      {
-        system("cls");
-        cout << "ERROR: Card number length cannot be greater than 4\n";
-      }
+      isInvalidPinLength(pin);
     } while (pin.length() < 4 || pin.length() > 4); // ensures user enter exactly four digits
     pin_num = stoi(pin); // conver pin of string type to integer with the help of the stoi and stores it in the pin_num of int type
     system("cls");
@@ -166,16 +180,7 @@ void ATM::addCardDetails()
       cout << "Enter the 4 digit pin again to confirm... ";
       getline(cin >> ws, pin);
       isDigit(pin);
-      if (pin.length() < 4)
-      {
-        system("cls");
-        cout << "ERROR: Card number length cannot be less than 4\n";
-      }
-      if (pin.length() > 4)
-      {
-        system("cls");
-        cout << "ERROR: Card number length cannot be greater than 4\n";
-      }
+      isInvalidPinLength(pin);
     } while (pin.length() < 4 || pin.length() > 4);
     pinNum = stoi(pin);
     if (pin_num != pinNum)
@@ -260,16 +265,7 @@ void ATM::login()
       cout << "Enter card number(must contain 10 digits)... ";
       getline(cin >> ws, number);
       isDigit(number);
-      if (number.length() < 10)
-      {
-        system("cls");
-        cout << "ERROR: Card number length cannot be less than 10\n";
-      }
-      if (number.length() > 10)
-      {
-        system("cls");
-        cout << "ERROR: Card number length cannot be greater than 10\n";
-      }
+      isInvalidCardLength(number);
     } while (number.length() < 10 || number.length() > 10);
     card_num = stoull(number);
     for (int index = 0; index < cardIndex; index++)
@@ -300,16 +296,7 @@ void ATM::login()
         cout << "Enter your 4 digit pin... ";
         getline(cin >> ws, pin);
         isDigit(pin);
-        if (pin.length() < 4)
-        {
-          system("cls");
-          cout << "ERROR: Pin number length cannot be less than 4\n";
-        }
-        if (pin.length() > 4)
-        {
-          system("cls");
-          cout << "ERROR: Pin number length cannot be greater than 4\n";
-        }
+        isInvalidPinLength(pin);
       } while (pin.length() < 4 || pin.length() > 4);
       pin_num = stoi(pin);
       if (pin_num == usersPins[pinIndex]) // checks whether the user has enter a valid pin than correspond to the card number with the help of pinIndex
@@ -485,16 +472,7 @@ void ATM::withdraw()
         cout << "Enter your 4 digit pin to confirm the operation... ";
         getline(cin >> ws, pin);
         isDigit(pin);
-        if (pin.length() < 4)
-        {
-          system("cls");
-          cout << "ERROR: Pin number length cannot be less than 4\n";
-        }
-        if (pin.length() > 4)
-        {
-          system("cls");
-          cout << "ERROR: Pin number length cannot be greater than 4\n";
-        }
+        isInvalidPinLength(pin);
       } while (pin.length() < 4 || pin.length() > 4);
       pin_num = stoi(pin);
       if (pin_num == usersPins[pinIndex])
@@ -551,16 +529,7 @@ void ATM::transfer()
         cout << "Enter card number you want to transfer the money to... ";
         getline(cin >> ws, number);
         isDigit(number);
-        if (number.length() < 10)
-        {
-          system("cls");
-          cout << "ERROR: Card number length cannot be less than 10\n";
-        }
-        if (number.length() > 10)
-        {
-          system("cls");
-          cout << "ERROR: Card number length cannot be greater than 10\n";
-        }
+        isInvalidCardLength(number);
       } while (number.length() < 10 || number.length() > 10);
       card_num = stoull(number);
       for (int index = 0; index < cardIndex; index++)
@@ -639,16 +608,7 @@ void ATM::transfer()
             cout << "Enter your 4 digit pin to confirm the operation... ";
             getline(cin >> ws, pin);
             isDigit(pin);
-            if (pin.length() < 4)
-            {
-              system("cls");
-              cout << "ERROR: Pin number length cannot be less than 4\n";
-            }
-            if (pin.length() > 4)
-            {
-              system("cls");
-              cout << "ERROR: Pin number length cannot be greater than 4\n";
-            }
+            isInvalidPinLength(pin);
           } while (pin.length() < 4 || pin.length() > 4);
           pin_num = stoi(pin);
           if (pin_num == usersPins[pinIndex])
